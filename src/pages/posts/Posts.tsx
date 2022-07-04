@@ -81,7 +81,7 @@ const PostsList = () => {
             <Option value="20">20</Option>
             <Option value="100">100</Option>
           </Select>
-          {/* {isLoading && <Spin />} */}
+          {isLoading && <Spin />}
           {error && <h1>{JSON.stringify(error)}</h1>}
           <Space direction="vertical" size="small" style={{ display: 'flex', margin: '1rem 0' }}>
             <TransitionGroup>
