@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, MutableRefObject } from "react";
 import { postAPI } from "../../services/PostService";
 import { Button, Col, Row, Select, Space, Spin, Typography } from "antd";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-// import InfiniteScroll from "react-infinite-scroll-component";
 import PostItem from "./PostItem";
 import { IPost } from "../../models/IPost";
 const { Title, Paragraph } = Typography;
@@ -11,9 +10,9 @@ const { Option } = Select;
 const PostsList = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
-  // const [totalCount, setTotalCount] = useState(0);
   const [postsDisplay, setPostsDisplay] = useState([]);
-  const lastElement = useRef(null);
+  const lastElement = useRef();
+  const observer = useRef();
   const {
     data: posts,
     error,
@@ -26,10 +25,26 @@ const PostsList = () => {
   const [deletePost, {}] = postAPI.useDeletePostMutation();
 
   useEffect(() => {
+    if(isLoading) return;
+    if(observer.current) (observer.current as IntersectionObserver).disconnect();
+    const callback = function(entries: any) {
+      if(entries[0].isIntersecting) {
+        setPage(page + 1);
+      }
+    }
+    observer.current = new IntersectionObserver(callback) as any;
+    (observer.current as unknown as IntersectionObserver).observe(lastElement.current as unknown as Element);
+  }, [postsDisplay]);
+
+  useEffect(() => {
     if(posts?.length) {
       setPostsDisplay([...postsDisplay, ...posts as []]);
     }
   }, [posts]);
+
+  useEffect(() => {
+    refetch();
+  }, [page]);
 
   const handleCreate = async () => {
     const title = prompt();
@@ -46,6 +61,7 @@ const PostsList = () => {
 
   const handleLimit = (value: string) => {
     setLimit(Number(value));
+    setPage(1);
   };
 
   return (
@@ -65,12 +81,12 @@ const PostsList = () => {
             <Option value="20">20</Option>
             <Option value="100">100</Option>
           </Select>
-          {isLoading && <Spin />}
+          {/* {isLoading && <Spin />} */}
           {error && <h1>{JSON.stringify(error)}</h1>}
           <Space direction="vertical" size="small" style={{ display: 'flex', margin: '1rem 0' }}>
             <TransitionGroup>
-              {posts &&
-                posts.map((post) => (
+              {postsDisplay &&
+                postsDisplay.map((post: IPost) => (
                   <CSSTransition
                     key={post.id}
                     timeout={500}
@@ -85,7 +101,7 @@ const PostsList = () => {
                 ))
               }
             </TransitionGroup>
-            <div ref={lastElement} style={{height: '20px'}} />
+            <div ref={lastElement as any} style={{height: '20px'}} />
           </Space>
         </Col>
       </Row>

@@ -21,7 +21,7 @@ export const fetchUsers = createAsyncThunk(
   'user/fetchAll',
   async (reqParams: any = {limit: 3, page: 1}, thunkAPI) => {
     try {
-      const response = await axios.get<IUser[]>(
+      const response = await axios.get(
         'https://jsonplaceholder.typicode.com/users', {
           params: {
             _limit: reqParams.limit,

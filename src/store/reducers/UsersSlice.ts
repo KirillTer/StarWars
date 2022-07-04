@@ -23,7 +23,6 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // common reducer
     // usersFetching(state) {
     //   state.isLoading = true;
     // },
@@ -37,7 +36,6 @@ export const userSlice = createSlice({
     //   state.error = action.payload;
     // },
   },
-  //redux toolkit reducer
   extraReducers: {
     [fetchUsers.pending.type]: (state) => {
       state.isLoading = true;
