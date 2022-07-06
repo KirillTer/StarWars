@@ -7,7 +7,7 @@ ReduxToolkit\
 ReduxToolkitQuery\
 AntDesign\
 JSONPlacholder (concurrently)\
-React-transition-group (CSSTransition)\
+React-transition-group (CSSTransition)
 
 ## Available Scripts
 
