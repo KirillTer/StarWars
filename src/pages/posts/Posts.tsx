@@ -12,8 +12,8 @@ const PostsList = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [postsDisplay, setPostsDisplay] = useState([]);
-  const lastElement = useRef();
-  const observer = useRef();
+  const lastElement = useRef<Element>();
+  const observer = useRef<IntersectionObserver>();
   const {
     data: posts,
     error,
@@ -33,8 +33,8 @@ const PostsList = () => {
         setPage(page + 1);
       }
     }
-    observer.current = new IntersectionObserver(callback) as any;
-    (observer.current as unknown as IntersectionObserver).observe(lastElement.current as unknown as Element);
+    observer.current = new IntersectionObserver(callback);
+    (observer.current).observe(lastElement.current!);
   }, [postsDisplay]);
 
   useEffect(() => {
