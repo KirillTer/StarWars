@@ -1,13 +1,13 @@
 ## Desciption and libraries:
 
-React 18.2 (Conquer mode)
-TypeScript
-React-routerr 6
-ReduxToolkit
-ReduxToolkitQuery
-AntDesign
-JSONPlacholder (concurrently)
-React-transition-group (CSSTransition)
+React 18.2 (Conquer mode)\
+TypeScript\
+React-routerr 6\
+ReduxToolkit\
+ReduxToolkitQuery\
+AntDesign\
+JSONPlacholder (concurrently)\
+React-transition-group (CSSTransition)\
 
 ## Available Scripts
 
