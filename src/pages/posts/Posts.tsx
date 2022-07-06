@@ -74,7 +74,7 @@ const PostsList = () => {
       <Row justify="center">
         <Typography>
           <Title level={2}>Posts List</Title>
-          <Paragraph>Redux toolkit query; Redux toolkit; Infinity scroll; faked API (JSONPlacholder)</Paragraph>
+          <Paragraph>Conquer mode, Redux toolkit query; Redux toolkit; Infinity scroll; faked API (JSONPlacholder)</Paragraph>
         </Typography>
       </Row>
       <Row>
