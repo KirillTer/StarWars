@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef, MutableRefObject } from "react";
+import React, { useEffect, useState, useRef, useTransition } from "react";
 import { postAPI } from "../../services/PostService";
-import { Button, Col, Row, Select, Space, Spin, Typography } from "antd";
+import { Button, Col, Row, Select, Space, Spin, Typography, Slider } from "antd";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PostItem from "./PostItem";
 import { IPost } from "../../models/IPost";
@@ -8,6 +8,7 @@ const { Title, Paragraph } = Typography;
 const { Option } = Select;
 
 const PostsList = () => {
+  const [_, startTransition] = useTransition();
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [postsDisplay, setPostsDisplay] = useState([]);
@@ -37,14 +38,18 @@ const PostsList = () => {
   }, [postsDisplay]);
 
   useEffect(() => {
-    if(posts?.length) {
-      setPostsDisplay([...postsDisplay, ...posts as []]);
-    }
+    startTransition(() => {
+      if(posts?.length && (page !== 1)) {
+        setPostsDisplay([...postsDisplay, ...posts as []]);
+      } else if (posts?.length) {
+        setPostsDisplay(posts as []);
+      }
+    });
   }, [posts]);
 
   useEffect(() => {
-    refetch();
-  }, [page]);
+    setPage(1);
+  }, [limit]);
 
   const handleCreate = async () => {
     const title = prompt();
@@ -76,11 +81,7 @@ const PostsList = () => {
         <Col span={12} offset={6}>
           <Button onClick={handleCreate}>Add new post</Button>
           <Button onClick={() => refetch()}>Refetch</Button>
-          <Select placeholder="Select items per page" style={{ width: '12rem' }} onChange={handleLimit}>
-            <Option value="10">10</Option>
-            <Option value="20">20</Option>
-            <Option value="100">100</Option>
-          </Select>
+          <Slider min={1} max={100} defaultValue={limit} onChange={setLimit}/>
           {isLoading && <Spin />}
           {error && <h1>{JSON.stringify(error)}</h1>}
           <Space direction="vertical" size="small" style={{ display: 'flex', margin: '1rem 0' }}>
