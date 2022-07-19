@@ -1,6 +1,6 @@
 ## Desciption and libraries:
 
-React 18.2 (Conquer mode)\
+React 18.2 (concurent mode)\
 TypeScript\
 React-routerr 6\
 ReduxToolkit\
