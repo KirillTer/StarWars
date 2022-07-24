@@ -24,7 +24,7 @@ const UsersList = () => {
     <div>
       <Row justify="center">
         <Typography>
-          <Title level={2}>Users List</Title>
+          <Title level={2} data-testid="users-page">Users List</Title>
           <Paragraph>Redux toolkit; Plain Redux commented; Common pagination; Real API (JSONPlacholder)</Paragraph>
         </Typography>
       </Row>

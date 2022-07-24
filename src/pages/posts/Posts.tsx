@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef, useTransition } from "react";
 import { postAPI } from "../../services/PostService";
-import { Button, Col, Row, Select, Space, Spin, Typography, Slider } from "antd";
+import { Button, Col, Row, Space, Spin, Typography, Slider } from "antd";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PostItem from "./PostItem";
 import { IPost } from "../../models/IPost";
 const { Title, Paragraph } = Typography;
-const { Option } = Select;
 
 const PostsList = () => {
   const [_, startTransition] = useTransition();
@@ -64,16 +63,11 @@ const PostsList = () => {
     updatePost(post);
   };
 
-  const handleLimit = (value: string) => {
-    setLimit(Number(value));
-    setPage(1);
-  };
-
   return (
     <div>
       <Row justify="center">
         <Typography>
-          <Title level={2}>Posts List</Title>
+          <Title level={2} data-testid="posts-page">Posts List</Title>
           <Paragraph>Conquer mode, Redux toolkit query; Redux toolkit; Infinity scroll; faked API (JSONPlacholder)</Paragraph>
         </Typography>
       </Row>
